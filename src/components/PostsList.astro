@@ -1,0 +1,17 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Frontmatter } from "../types";
+import PostCard from "./PostCard.astro";
+
+export interface Props {
+  posts: MarkdownInstance<Frontmatter>[];
+  perPage?: number;
+}
+
+const { posts, perPage = 5 } = Astro.props;
+const slicedPosts = posts.slice(0, perPage);
+---
+
+<section class="container max-w-[780px] mx-auto px-4">
+  {slicedPosts.map(({ frontmatter }, index) => <PostCard {...frontmatter} />)}
+</section>

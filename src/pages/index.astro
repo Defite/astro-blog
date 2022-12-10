@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import getSortedPosts from "../utils/getSortedPosts";
+
+import type { Frontmatter } from "../types";
+import PostsList from "../components/PostsList.astro";
+
+const posts = await Astro.glob<Frontmatter>("../content/**/*.md");
+const sortedPosts = getSortedPosts(posts);
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <PostsList posts={sortedPosts} />
+  </main>
+</Layout>
+
+<style></style>

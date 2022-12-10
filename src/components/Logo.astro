@@ -1,0 +1,26 @@
+---
+export interface Props {
+  type: "header" | "footer";
+}
+
+const { type } = Astro.props;
+---
+
+<a
+  href="/"
+  class:list={["logo text-[#34383b]", { "footer-logo": type === "footer" }]}
+  >Defite</a
+>
+
+<style>
+  .logo {
+    @apply text-6xl;
+    @apply italic;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-variant-alternates: normal;
+  }
+
+  .footer-logo {
+    @apply text-4xl;
+  }
+</style>

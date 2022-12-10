@@ -1,0 +1,65 @@
+---
+import type { Frontmatter } from "../types";
+import convertDate from "../utils/convertDate";
+
+export type Props = Frontmatter;
+
+const { title, datetime, category, coverImage, slug, excerpt } = Astro.props;
+const date = convertDate(datetime);
+const postUrl = `/posts/${slug}`;
+---
+
+<article class="post mb-8 mt-20 relative">
+  <header>
+    <div class="post-meta mb-3">
+      <a href="/" class="post-category mr-3 md:mr-0">
+        {category}
+      </a>
+      <time
+        class="md:absolute md:top-0 md:left-0 text-stone-500"
+        datetime={date}
+        class="post-date">{date}</time
+      >
+    </div>
+    <h2 class="text-2xl md:text-[32px] font-bold text-gray-900 mb-8">
+      <a href={postUrl}>{title}</a>
+    </h2>
+  </header>
+  <div>
+    {coverImage && <img class="rounded-md mb-4" src={coverImage} />}
+  </div>
+
+  <div class="text-base md:text-lg mb-4">{excerpt}</div>
+
+  <footer class="text-base md:text-lg">
+    <a class="text-indigo-500" href={postUrl}>Read more</a>
+  </footer>
+</article>
+
+<style>
+  .post {
+  }
+
+  @media (min-width: 701px) {
+    .post {
+      position: relative;
+      padding-left: 180px;
+    }
+  }
+
+  .post:first-child {
+    @apply mt-0;
+  }
+
+  .post-category {
+    @apply rounded-md;
+    @apply uppercase;
+    @apply text-white;
+    @apply bg-[#4ad440];
+    @apply inline-block;
+    @apply px-1;
+    @apply py-1;
+    @apply font-bold;
+    @apply text-sm;
+  }
+</style>
