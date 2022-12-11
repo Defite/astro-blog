@@ -50,5 +50,5 @@ const { post } = Astro.props;
 ---
 
 <Layout title="Welcome to Astro.">
-  <PostCard post={post} isPostPage />
+  {post ? <PostCard post={post} isPostPage /> : null}
 </Layout>
