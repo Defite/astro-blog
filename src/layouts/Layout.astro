@@ -23,7 +23,9 @@ const { title } = Astro.props;
   </head>
   <body>
     <Header />
-    <slot />
+    <section class="container max-w-[780px] mx-auto px-4">
+      <slot />
+    </section>
     <Footer />
   </body>
 </html>

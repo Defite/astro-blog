@@ -1,25 +1,27 @@
 ---
+import type { MarkdownInstance } from "astro";
 import type { Frontmatter } from "../types";
 import convertDate from "../utils/convertDate";
 
-export type Props = Frontmatter;
+export type Props = {
+  post: MarkdownInstance<Frontmatter>;
+  isPostPage?: boolean;
+};
 
-const { title, datetime, category, coverImage, slug, excerpt } = Astro.props;
+const { isPostPage } = Astro.props;
+const { frontmatter, Content } = Astro.props.post;
+const { title, datetime, category, coverImage, slug, excerpt } = frontmatter;
 const date = convertDate(datetime);
 const postUrl = `/posts/${slug}`;
 ---
 
-<article class="post mb-8 mt-20 relative">
+<article class:list={["post", { "post-full": isPostPage }]}>
   <header>
     <div class="post-meta mb-3">
       <a href="/" class="post-category mr-3 md:mr-0">
         {category}
       </a>
-      <time
-        class="md:absolute md:top-0 md:left-0 text-stone-500"
-        datetime={date}
-        class="post-date">{date}</time
-      >
+      <time class="post-date" datetime={date} class="post-date">{date}</time>
     </div>
     <h2 class="text-2xl md:text-[32px] font-bold text-gray-900 mb-8">
       <a href={postUrl}>{title}</a>
@@ -29,26 +31,30 @@ const postUrl = `/posts/${slug}`;
     {coverImage && <img class="rounded-md mb-4" src={coverImage} />}
   </div>
 
-  <div class="text-base md:text-lg mb-4">{excerpt}</div>
+  <div class="text-base md:text-lg mb-4">
+    {isPostPage ? <Content /> : excerpt}
+  </div>
 
-  <footer class="text-base md:text-lg">
-    <a class="text-indigo-500" href={postUrl}>Read more</a>
-  </footer>
+  {
+    !isPostPage ? (
+      <footer class="text-base md:text-lg">
+        <a class="text-indigo-500" href={postUrl}>
+          Read more
+        </a>
+      </footer>
+    ) : null
+  }
 </article>
 
 <style>
   .post {
+    @apply mb-8;
+    @apply mt-20;
+    @apply relative;
   }
 
-  @media (min-width: 701px) {
-    .post {
-      position: relative;
-      padding-left: 180px;
-    }
-  }
-
-  .post:first-child {
-    @apply mt-0;
+  .post-date {
+    @apply text-stone-500;
   }
 
   .post-category {
@@ -61,5 +67,34 @@ const postUrl = `/posts/${slug}`;
     @apply py-1;
     @apply font-bold;
     @apply text-sm;
+  }
+
+  @media (min-width: 701px) {
+    .post {
+      position: relative;
+      padding-left: 180px;
+    }
+
+    .post-full {
+      padding-left: 0;
+    }
+
+    .post-date {
+      @apply absolute;
+      @apply top-0;
+      @apply left-0;
+    }
+
+    .post-full .post-date {
+      @apply relative;
+    }
+
+    .post-full .post-category {
+      @apply mr-3;
+    }
+  }
+
+  .post:first-child {
+    @apply mt-0;
   }
 </style>

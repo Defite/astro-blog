@@ -12,6 +12,4 @@ const { posts, perPage = 5 } = Astro.props;
 const slicedPosts = posts.slice(0, perPage);
 ---
 
-<section class="container max-w-[780px] mx-auto px-4">
-  {slicedPosts.map(({ frontmatter }, index) => <PostCard {...frontmatter} />)}
-</section>
+{slicedPosts.map((post, index) => <PostCard post={post} />)}
