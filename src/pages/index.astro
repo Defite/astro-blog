@@ -6,7 +6,7 @@ import getSortedPosts from "../utils/getSortedPosts";
 import type { Frontmatter } from "../types";
 import PostsList from "../components/PostsList.astro";
 
-const posts = await Astro.glob<Frontmatter>("../content/**/*.md");
+const posts = await Astro.glob<Frontmatter>("../content/posts/*.md");
 const sortedPosts = getSortedPosts(posts);
 ---
 
