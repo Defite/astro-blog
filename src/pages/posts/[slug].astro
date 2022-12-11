@@ -49,6 +49,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 ---
 
-<Layout title="Welcome to Astro.">
-  {post ? <PostCard post={post} isPostPage /> : null}
-</Layout>
+{
+  post ? (
+    <Layout title={post.frontmatter.title}>
+      <PostCard post={post} isPostPage />
+    </Layout>
+  ) : null
+}
