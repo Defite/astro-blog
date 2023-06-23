@@ -58,6 +58,8 @@ const { title } = Astro.props;
 
 <script is:inline>
 document.addEventListener("DOMContentLoaded", function (event) {
-  document.body.classList.remove("loading");
+  setTimeout(() => {
+    document.body.classList.remove("loading");
+  }, 400);
 });
 </script>
