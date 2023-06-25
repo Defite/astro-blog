@@ -1,3 +1,7 @@
+export enum Categories {
+  Blog = "blog",
+  Js = "js",
+}
 export interface Frontmatter {
   title: string;
   coverImage?: string;
@@ -8,7 +12,7 @@ export interface Frontmatter {
   featured: boolean;
   draft: boolean;
   tags?: string[];
-  category: string;
+  category: Categories;
 }
 
 export type SocialsObject = {

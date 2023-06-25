@@ -2,6 +2,7 @@
 import type { MarkdownInstance } from "astro";
 import type { Frontmatter } from "../types";
 import convertDate from "../utils/convertDate";
+import getCategoryTheme from "../utils/getCategoryTheme";
 
 export type Props = {
   post: MarkdownInstance<Frontmatter>;
@@ -13,6 +14,8 @@ const { frontmatter, Content } = Astro.props.post;
 const { title, datetime, category, coverImage, slug, excerpt } = frontmatter;
 const date = convertDate(datetime);
 const postUrl = `/posts/${slug}`;
+
+const categoryColor = getCategoryTheme(category);
 ---
 
 <article class:list={["post", "post-animation", { "post-full": isPostPage }]}>
@@ -20,7 +23,10 @@ const postUrl = `/posts/${slug}`;
     {
       category && date ? (
         <div class="post-meta mb-3">
-          <a href="/" class="post-category mr-3 md:mr-0">
+          <a
+            href={`/category/${category}`}
+            class={`post-category mr-3 md:mr-0 ${categoryColor}`}
+          >
             {category}
           </a>
           <time class="post-date" datetime={date} class="post-date">
@@ -29,7 +35,9 @@ const postUrl = `/posts/${slug}`;
         </div>
       ) : null
     }
-    <h2 class="text-2xl md:text-[32px] font-bold text-gray-900 mb-8">
+    <h2
+      class="text-2xl md:text-[32px] font-bold text-gray-900 dark:text-[#efefef] mb-8"
+    >
       <a href={postUrl}>{title}</a>
     </h2>
   </header>
@@ -44,8 +52,9 @@ const postUrl = `/posts/${slug}`;
   {
     !isPostPage ? (
       <footer class="text-base md:text-lg">
-        <a class="text-indigo-500" href={postUrl}>
+        <a class="read-more" href={postUrl}>
           Read more
+          <span class="hidden-arrow">&rarr;</span>
         </a>
       </footer>
     ) : null
@@ -55,7 +64,7 @@ const postUrl = `/posts/${slug}`;
 <style>
   .post {
     @apply mb-8;
-    @apply mt-20;
+    @apply mt-16;
     @apply relative;
   }
 
@@ -70,13 +79,14 @@ const postUrl = `/posts/${slug}`;
 
   .post-date {
     @apply text-stone-500;
+    @apply dark:text-stone-400;
   }
 
   .post-category {
     @apply rounded-md;
     @apply uppercase;
     @apply text-white;
-    @apply bg-[#4ad440];
+    @apply dark:text-[#222222];
     @apply inline-block;
     @apply px-1;
     @apply py-1;
@@ -84,8 +94,23 @@ const postUrl = `/posts/${slug}`;
     @apply text-sm;
   }
 
+  .post-content {
+    @apply dark:text-neutral-300;
+  }
+
   .post-content :global(p) {
     margin-top: 1em;
+  }
+
+  .post-content :global(a) {
+    @apply text-indigo-500;
+    @apply border-indigo-500/50;
+    @apply border-b-2;
+    @apply border-solid;
+  }
+
+  .post-content :global(a:hover) {
+    @apply border-indigo-500;
   }
 
   @media (min-width: 701px) {
@@ -115,5 +140,17 @@ const postUrl = `/posts/${slug}`;
 
   .post:first-child {
     @apply mt-0;
+  }
+
+  .read-more {
+    @apply text-indigo-500;
+  }
+
+  .read-more .hidden-arrow {
+    @apply invisible;
+  }
+
+  .read-more:hover .hidden-arrow {
+    @apply visible;
   }
 </style>

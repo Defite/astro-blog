@@ -8,8 +8,10 @@ const { type } = Astro.props;
 
 <a
   href="/"
-  class:list={["logo text-[#34383b]", { "footer-logo": type === "footer" }]}
-  >Defite</a
+  class:list={[
+    "logo text-[#34383b] dark:text-neutral-600",
+    { "footer-logo": type === "footer" },
+  ]}>Defite</a
 >
 
 <style>

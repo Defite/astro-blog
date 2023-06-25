@@ -1,13 +1,13 @@
 ---
 author: Nikita Makhov
-datetime: 2022-11-01T14:23:00Z
+datetime: 2022-12-01T14:23:00Z
 title: Second post
 slug: second-post
 featured: false
 draft: false
 tags:
   - blog
-category: blog
+category: js
 coverImage: "/assets/posts/pascal-van-soest-1hsSEv5cR84-unsplash.jpg"
 excerpt: Curabitur vulputate felis vel nibh ultrices sagittis. Etiam consectetur enim enim. Duis volutpat aliquam mi. Vivamus lectus sem, ultrices et euismod vitae, malesuada vitae magna. Curabitur euismod pretium eros et lobortis.
 ---

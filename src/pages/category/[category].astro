@@ -1,0 +1,49 @@
+---
+import type { MarkdownInstance } from "astro";
+import PostCard from "../../components/PostCard.astro";
+import Layout from "../../layouts/Layout.astro";
+import PostsList from "../../components/PostsList.astro";
+import CategoryHeader from "../../components/CategoryHeader.astro";
+import type { Categories, Frontmatter } from "../../types";
+import getPageNumbers from "../../utils/getPageNumbers";
+import slugify from "../../utils/slugify";
+
+import getSortedPosts from "../../utils/getSortedPosts";
+
+type Params = {
+  category: Categories;
+};
+
+export async function getStaticPaths() {
+  const posts = await Astro.glob<Frontmatter>("../../content/posts/*.md");
+
+  const categories = posts.map((post) => post.frontmatter.category);
+
+  return categories.map((category) => {
+    const filteredPosts = posts.filter((post) =>
+      post.frontmatter.category.includes(category)
+    );
+
+    return {
+      params: { category },
+      props: {
+        posts: filteredPosts,
+      },
+    };
+  });
+}
+
+const { category } = Astro.params as Params;
+const { posts } = Astro.props;
+
+const sortedPosts = getSortedPosts(posts);
+---
+
+{
+  (
+    <Layout title={category}>
+      <CategoryHeader category={category} />
+      <PostsList posts={sortedPosts} />
+    </Layout>
+  )
+}
