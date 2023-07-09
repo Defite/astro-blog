@@ -15,7 +15,7 @@ type Params = {
 };
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob<Frontmatter>("../../content/posts/*.md");
+  const posts = await Astro.glob<Frontmatter>("../../content/posts/*.mdx");
 
   const categories = posts.map((post) => post.frontmatter.category);
 
