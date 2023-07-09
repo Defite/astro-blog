@@ -1,5 +1,5 @@
 ---
-import type { MarkdownInstance } from "astro";
+import type { MDXInstance } from "astro";
 import PostCard from "../../components/PostCard.astro";
 import Layout from "../../layouts/Layout.astro";
 import type { Frontmatter } from "../../types";
@@ -7,7 +7,7 @@ import getPageNumbers from "../../utils/getPageNumbers";
 import slugify from "../../utils/slugify";
 
 export interface Props {
-  post: MarkdownInstance<Frontmatter>;
+  post: MDXInstance<Frontmatter>;
 }
 
 type PostResult = {
@@ -15,7 +15,7 @@ type PostResult = {
     slug: string | number;
   };
   props?: {
-    post: MarkdownInstance<Record<string, any>>;
+    post: MDXInstance<Record<string, any>>;
   };
 }[];
 
@@ -26,7 +26,7 @@ type PagePaths = {
 }[];
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob<Frontmatter>("../../content/posts/*.md");
+  const posts = await Astro.glob<Frontmatter>("../../content/posts/*.mdx");
 
   let postResult: PostResult = posts.map((post) => {
     return {

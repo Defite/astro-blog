@@ -1,0 +1,14 @@
+---
+import type React from "react";
+export type Props = {
+    src: string;
+    caption?: React.ReactNode;
+};
+
+const { caption, src } = Astro.props;
+---
+
+<figure class="kg-card kg-image-card kg-width-wide">
+    <img src={src} />
+    {caption ? <figcaption>{caption}</figcaption> : null}
+</figure>

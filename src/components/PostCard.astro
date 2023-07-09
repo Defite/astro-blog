@@ -1,11 +1,11 @@
 ---
-import type { MarkdownInstance } from "astro";
+import type { MDXInstance } from "astro";
 import type { Frontmatter } from "../types";
 import convertDate from "../utils/convertDate";
 import getCategoryTheme from "../utils/getCategoryTheme";
 
 export type Props = {
-  post: MarkdownInstance<Frontmatter>;
+  post: MDXInstance<Frontmatter>;
   isPostPage?: boolean;
 };
 
@@ -152,5 +152,88 @@ const categoryColor = getCategoryTheme(category);
 
   .read-more:hover .hidden-arrow {
     @apply visible;
+  }
+
+  /* Post elements styling */
+  .post :global(h2),
+  .post :global(h3),
+  .post :global(h4) {
+    @apply mt-10;
+    @apply mb-4;
+    @apply font-bold;
+  }
+
+  .post :global(h2) {
+    @apply text-[1.75rem];
+  }
+
+  .post :global(h3) {
+    @apply text-2xl;
+  }
+  .post :global(h4) {
+    @apply text-xl;
+  }
+
+  .post :global(blockquote) {
+    @apply my-12;
+    @apply text-xl;
+    border-left-width: 4px;
+    border-left-style: solid;
+    @apply border-l-indigo-600;
+    @apply px-6;
+    @apply py-1;
+  }
+
+  .post :global(blockquote p) {
+    margin-top: 0;
+  }
+
+  .post :global(ul),
+  .post :global(ol) {
+    @apply m-6;
+  }
+
+  .post :global(ol) {
+    list-style: revert;
+  }
+
+  .post :global(ul li),
+  .post :global(ol li) {
+    @apply mb-2;
+  }
+
+  .post :global(ul li::before) {
+    @apply text-indigo-600;
+    content: "–";
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+
+  .post :global(ol li::marker) {
+    @apply text-indigo-600;
+  }
+
+  /* Specific image styles, that can be set in markdown */
+  .post :global(.kg-width-wide),
+  .post :global(.kg-width-full) {
+    position: relative;
+    width: 60vw;
+    min-width: 100%;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    transform: translateX(calc(50vw - 50%));
+  }
+
+  .post :global(.kg-width-full) {
+    width: 100vw;
+  }
+
+  .post :global(.kg-card figcaption) {
+    @apply mt-4;
+    @apply mb-6;
+    @apply text-sm;
+    @apply text-[#757575];
+    text-align: center;
   }
 </style>

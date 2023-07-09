@@ -1,7 +1,7 @@
-import type { MarkdownInstance } from "astro";
+import type { MDXInstance } from "astro";
 import type { Frontmatter } from "../types";
 
-const getSortedPosts = (posts: MarkdownInstance<Frontmatter>[]) =>
+const getSortedPosts = (posts: MDXInstance<Frontmatter>[]) =>
   posts
     .filter(({ frontmatter }) => !frontmatter.draft)
     .sort(
