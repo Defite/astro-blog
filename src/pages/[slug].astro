@@ -1,58 +1,39 @@
 ---
-import type { MarkdownInstance } from "astro";
 import PostCard from "../components/PostCard.astro";
 import Layout from "../layouts/Layout.astro";
-import type { Frontmatter } from "../types";
-import getPageNumbers from "../utils/getPageNumbers";
-import slugify from "../utils/slugify";
+import {Params, PostOrPage} from "@tryghost/content-api";
+import {ghostClient} from "../lib/ghost";
 
 export interface Props {
-  post: MarkdownInstance<Frontmatter>;
+    postOrPage: PostOrPage;
 }
-
-type PostResult = {
-  params: {
-    slug: string | number;
-  };
-  props?: {
-    post: MarkdownInstance<Record<string, any>>;
-  };
-}[];
-
-type PagePaths = {
-  params: {
-    slug: string;
-  };
-}[];
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob<Frontmatter>("../content/pages/*.md");
-
-  let postResult: PostResult = posts.map((post) => {
-    return {
-      params: {
-        slug: slugify(post.frontmatter),
-      },
-      props: {
-        post,
-      },
+    const browseParams: Params = {
+        limit: 'all',
+        include: ['tags'],
     };
-  });
 
-  const pagePaths: PagePaths = getPageNumbers(posts.length).map((pageNum) => ({
-    params: { slug: String(pageNum) },
-  }));
+    const posts = await ghostClient.posts.browse(browseParams);
+    const pages = (await ghostClient.pages.browse(browseParams)).map((page) => ({
+        page: true,
+        ...page,
+    }));
+    const postsOrPages = [...posts, ...pages];
 
-  return [...postResult, ...pagePaths];
+    return postsOrPages.map((postOrPage) => ({
+        params: {slug: postOrPage.slug},
+        props: {postOrPage},
+    }));
 }
 
-const { post: page } = Astro.props;
+const {postOrPage} = Astro.props;
 ---
 
 {
-  page ? (
-    <Layout title={page.frontmatter.title}>
-      <PostCard post={page} isPostPage />
+    postOrPage ? (
+    <Layout title={postOrPage.title}>
+        <PostCard post={postOrPage} isPostPage/>
     </Layout>
-  ) : null
-}
+        ) : null
+    }

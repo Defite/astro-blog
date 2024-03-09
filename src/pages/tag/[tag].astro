@@ -1,0 +1,36 @@
+
+---
+import {ghostClient} from "../../lib/ghost";
+import Layout from "../../layouts/Layout.astro";
+import PostsList from "../../components/PostsList.astro";
+import CategoryHeader from "../../components/CategoryHeader.astro";
+
+export async function getStaticPaths() {
+    const tags = await ghostClient.tags.browse({
+        limit: 'all',
+        filter: 'visibility:public',
+    });
+
+    return tags.map((tag) => ({
+        params: { tag: tag.slug },
+        props: { tag },
+    }));
+}
+
+const { tag } = Astro.props;
+
+const posts = await ghostClient.posts.browse({
+    filter: `tag:${tag.slug}`,
+    limit: '5',
+    include: ['tags'],
+});
+---
+
+{
+  (
+    <Layout title={tag.name}>
+      <CategoryHeader tag={tag} />
+      <PostsList posts={posts} />
+    </Layout>
+  )
+}

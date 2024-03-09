@@ -1,21 +1,20 @@
 ---
-import type { MDXInstance } from "astro";
-import type { Frontmatter } from "../types";
+import {PostOrPage} from "@tryghost/content-api";
 import convertDate from "../utils/convertDate";
 import getCategoryTheme from "../utils/getCategoryTheme";
 
-export type Props = {
-  post: MDXInstance<Frontmatter>;
+interface Props {
+  post: PostOrPage;
   isPostPage?: boolean;
-};
+}
 
-const { isPostPage } = Astro.props;
-const { frontmatter, Content } = Astro.props.post;
-const { title, datetime, category, coverImage, slug, excerpt } = frontmatter;
+const { post, isPostPage } = Astro.props;
+const { title, primary_tag: category, published_at: datetime, feature_image, slug, excerpt } = post;
+
 const date = convertDate(datetime);
 const postUrl = `/posts/${slug}`;
 
-const categoryColor = getCategoryTheme(category);
+const categoryColor = category ? getCategoryTheme(category.slug) : undefined;
 ---
 
 <article class:list={["post", "post-animation", { "post-full": isPostPage }]}>
@@ -24,12 +23,12 @@ const categoryColor = getCategoryTheme(category);
       category && date ? (
         <div class="post-meta mb-3">
           <a
-            href={`/category/${category}`}
+            href={`/tag/${category.slug}`}
             class={`post-category mr-3 md:mr-0 ${categoryColor}`}
           >
-            {category}
+            {category.name}
           </a>
-          <time class="post-date" datetime={date} class="post-date">
+          <time class="post-date" datetime={date}>
             {date}
           </time>
         </div>
@@ -42,11 +41,11 @@ const categoryColor = getCategoryTheme(category);
     </h2>
   </header>
   <div>
-    {coverImage && <img class="rounded-md mb-4" src={coverImage} />}
+    {feature_image && <img class="rounded-md mb-4" src={feature_image} alt="" />}
   </div>
 
   <div class="post-content text-base md:text-lg mb-4">
-    {isPostPage ? <Content /> : excerpt}
+    {isPostPage ? <Fragment set:html={post.html} /> : excerpt}
   </div>
 
   {

@@ -1,15 +1,13 @@
 ---
-import type { MarkdownInstance } from "astro";
-import type { Frontmatter } from "../types";
+import type {PostsOrPages} from "@tryghost/content-api";
 import PostCard from "./PostCard.astro";
 
 export interface Props {
-  posts: MarkdownInstance<Frontmatter>[];
-  perPage?: number;
+  posts: PostsOrPages;
 }
 
-const { posts, perPage = 5 } = Astro.props;
-const slicedPosts = posts.slice(0, perPage);
+const { posts } = Astro.props;
+const slicedPosts = posts.slice(0, posts.meta.pagination.limit);
 ---
 
-{slicedPosts.map((post, index) => <PostCard post={post} />)}
+{slicedPosts.map((post) => <PostCard post={post} />)}

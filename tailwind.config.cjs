@@ -10,8 +10,8 @@ module.exports = {
         md: "701px",
       },
       colors: {
-        "category-blog": "#4ad440",
-        "category-js": "#f7df1e",
+        "tag-blog": "#4ad440",
+        "tag-js": "#f7df1e",
         "light-aaa": "#aaaaaa",
       },
     },

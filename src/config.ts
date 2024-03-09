@@ -5,5 +5,5 @@ export const SITE = {
   title: "Nikita Codes",
   ogImage: "share.png",
   lightAndDarkMode: true,
-  postPerPage: 3,
+  postPerPage: 5,
 };

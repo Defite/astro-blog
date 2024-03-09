@@ -184,39 +184,7 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		"pages": {
-"about-me.md": {
-	id: "about-me.md";
-  slug: "about-me";
-  body: string;
-  collection: "pages";
-  data: any
-} & { render(): Render[".md"] };
-};
-"posts": {
-"hello-world.mdx": {
-	id: "hello-world.mdx";
-  slug: "hello-world";
-  body: string;
-  collection: "posts";
-  data: any
-} & { render(): Render[".mdx"] };
-"second-post.mdx": {
-	id: "second-post.mdx";
-  slug: "second-post";
-  body: string;
-  collection: "posts";
-  data: any
-} & { render(): Render[".mdx"] };
-"test-post.mdx": {
-	id: "test-post.mdx";
-  slug: "test-post";
-  body: string;
-  collection: "posts";
-  data: any
-} & { render(): Render[".mdx"] };
-};
-
+		
 	};
 
 	type DataEntryMap = {

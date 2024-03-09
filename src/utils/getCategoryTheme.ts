@@ -1,17 +1,18 @@
 import { Categories } from "../types";
+import type {Tag} from "@tryghost/content-api";
 
 /**
- * Gets tailwind class depending on category
- * @param category
+ * Gets tailwind class depending on tag
  * @returns string
+ * @param tag
  */
-const getCategoryTheme = (category: Categories) => {
-  switch (category) {
+const getCategoryTheme = (tag: Tag['slug']) => {
+  switch (tag) {
     case Categories.Blog:
-      return "bg-category-blog";
+      return "bg-tag-blog";
 
     case Categories.Js:
-      return "bg-category-js";
+      return "bg-tag-js";
 
     default:
       break;
