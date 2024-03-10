@@ -9,7 +9,7 @@ import type {Tag} from "@tryghost/content-api";
 const getCategoryTheme = (tag: Tag['slug']) => {
   switch (tag) {
     case Categories.Blog:
-      return "bg-tag-blog";
+      return "bg-lime-500";
 
     case Categories.Js:
       return "bg-tag-js";

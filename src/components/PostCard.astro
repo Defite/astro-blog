@@ -9,24 +9,24 @@ interface Props {
 }
 
 const { post, isPostPage } = Astro.props;
-const { title, primary_tag: category, published_at: datetime, feature_image, slug, excerpt } = post;
+const { title, primary_tag: tag, published_at: datetime, feature_image, slug, excerpt } = post;
 
 const date = convertDate(datetime);
 const postUrl = `/posts/${slug}`;
 
-const categoryColor = category ? getCategoryTheme(category.slug) : undefined;
+const tagColor = tag ? getCategoryTheme(tag.slug) : undefined;
 ---
 
 <article class:list={["post", "post-animation", { "post-full": isPostPage }]}>
   <header>
     {
-      category && date ? (
+      tag && date ? (
         <div class="post-meta mb-3">
           <a
-            href={`/tag/${category.slug}`}
-            class={`post-category mr-3 md:mr-0 ${categoryColor}`}
+            href={`/tag/${tag.slug}`}
+            class={`post-category mr-3 md:mr-0 ${tagColor}`}
           >
-            {category.name}
+            {tag.name}
           </a>
           <time class="post-date" datetime={date}>
             {date}

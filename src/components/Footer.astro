@@ -1,11 +1,11 @@
 <footer class="footer">
   <ul class="ul">
-    <li class="li"><a href="/about-me">About me</a></li>
+    <li class="li"><a href="/about">About</a></li>
     <li class="li"><a href="/uses">/uses</a></li>
   </ul>
 
   <div class="meta">
-    <p>&copy;2022 Defite</p>
+    <p>Developed by <a href="https://github.com/Defite/astro-blog">Defite</a> with <a href="https://astro.build/">Astro</a>, inspired by <a href="https://track-demo.superthemes.co/">Track</a> </p>
   </div>
 
   <style>
@@ -23,6 +23,15 @@
       @apply my-1;
       @apply mx-2;
       @apply inline-block;
+    }
+
+    .meta {
+      @apply text-gray-400;
+    }
+
+    .meta a {
+      @apply text-gray-700;
+      @apply dark:text-gray-500;
     }
   </style>
 </footer>
