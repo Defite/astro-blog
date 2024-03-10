@@ -1,6 +1,15 @@
+
 ---
 import "@fontsource/ibm-plex-sans/700-italic.css";
 import Logo from "./Logo.astro";
+import {ghostClient} from "../lib/ghost";
+
+const settings = await ghostClient.settings
+.browse()
+.catch((err) => {
+    console.error(err);
+    });
+const { description } = settings;
 ---
 
 <header class="mb-20 pt-8 px-4">
@@ -8,7 +17,7 @@ import Logo from "./Logo.astro";
     <Logo type="header" />
     <div class="mt-4">
       <div class="text-[#757575] dark:text-stone-400">
-        Microblog about frontend and stuff, built on top of Astro
+        {description}
       </div>
     </div>
   </div>
